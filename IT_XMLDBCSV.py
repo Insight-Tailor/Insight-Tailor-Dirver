@@ -17,7 +17,7 @@ IT_XMLDBCSV_DB2CSV(host,port,user,pwd,db,sql,outputfile)
 ====CSV
 IT_XMLDBCSV_csv_with_header_2_ordered_dict(csv_file)
 IT_XMLDBCSV_csv_with_no_header_2_list(CSV_filename)
-
+XMLDBCSV_list_of_dict_2_csv
 
 20181014 Wind
 
@@ -329,3 +329,25 @@ def IT_XMLDBCSV_csv_with_no_header_2_list(CSV_filename):
 		for row in reader:
 			LIST.append(row)
 	return(LIST)
+	
+"""*************************************************************************************************
+XMLDBCSV_list_of_dict_2_csv save list of dictionary to csv file
+if the list is empty[], save nothing
+
+Wind 20181014
+*************************************************************************************************"""
+def XMLDBCSV_list_of_dict_2_csv(list_of_dict,CSV_filename):
+	import csv
+	if list_of_dict==[]:
+		return()
+	with open(CSV_filename, 'w',newline='') as csvfile:
+		spamwriter = csv.writer(csvfile)
+		string=[]
+		for keys in list_of_dict[1]:
+			string.append(keys)
+		spamwriter.writerow(string)
+		for row in list_of_dict:
+			string=[]
+			for key in list_of_dict[1]:
+				string.append(row[key])
+			spamwriter.writerow(string)

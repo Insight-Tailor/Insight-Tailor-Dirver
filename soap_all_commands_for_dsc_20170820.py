@@ -999,9 +999,9 @@ def soap_query_listcache(dsc_url,listcachename):
 	for entry in entrys:
 		result_list.append(entry.text)
 
-	os.remove(filename)
+	#os.remove(filename)
 	return result_list
-soap_query_listcache('http://10.166.20.125:8080/DSC_SOAP/query?','LIST_TEST')
+soap_query_listcache('http://10.162.28.186:8080/DSC_SOAP/query?','REALM_TO_OPERATOR')
 
 def soap_query_2d_listcache(dsc_url,listcachename):
 	filename="query_2d_listcache_result.xml"

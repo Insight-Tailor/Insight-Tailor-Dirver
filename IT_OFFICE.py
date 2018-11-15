@@ -1,18 +1,18 @@
 """*************************************************************************************************
 ====EXCEL
-	IT_OFFICE_merge_csv_to_xls(filename_cut,sheetname_lenth,initial_dir="\\")
+	OFFICE_merge_csv_to_xls(filename_cut,sheetname_lenth,initial_dir="\\")
 
 
 ====OUTLOOK
-	IT_OFFICE_sendemail (Tolist, Cclist, Subject,Sentence1,attachment="Null")
-	IT_OFFICE_send_plain_mail (Tolist, Cclist, Subject, Sentence1,attachment="Null")
+	OFFICE_sendemail (Tolist, Cclist, Subject,Sentence1,attachment="Null")
+	OFFICE_send_plain_mail (Tolist, Cclist, Subject, Sentence1,attachment="Null")
 
 
 
 
 
 Last Modified by:
-Wind 20181016
+wind.wang@syniverse.com 20181016
 *************************************************************************************************"""
 
 """====EXCEL*************************************************************************************"""
@@ -25,9 +25,9 @@ if source file name is ABC20180913.csv,ABC20180914.csv f=-2,c=-4
                        ABC201809
 merged filename will be ABC281809,sheet name will be 0913&0914
 
-Wind 20180924
+wind.wang@syniverse.com 20180924
 *************************************************************************************************"""
-def IT_OFFICE_merge_csv_to_xls(filename_cut,sheetname_lenth,initial_dir="\\"):
+def OFFICE_merge_csv_to_xls(filename_cut,sheetname_lenth,initial_dir="\\"):
 	from IT_OS import IT_OS_get_file_path_name
 	import xlwt,os,csv
 	fpfn= IT_OS_get_file_path_name(initial_dir)
@@ -72,15 +72,35 @@ def IT_OFFICE_merge_csv_to_xls(filename_cut,sheetname_lenth,initial_dir="\\"):
 	
 #IT_OFFICE_merge_csv_to_xls(-2,-4)
 
+"""*************************************************************************************************
+Tansfer decimal number to excel column letter string
+can only process less than 701
+to be improved in future
+
+wind.wang@syniverse.com 20181114
+*************************************************************************************************"""
+def OFFICE_transfer_decimal_column_to_excel_letter_column(dec_column):
+
+	if dec_column>701:
+		print("can not process more than 701")
+		return()
+	if dec_column<=26:
+		return(chr(digit_column+64))
+	if dec_column>26:
+		d1=dec_column//26
+		d2=dec_column%26
+		return(chr(d1+64)+chr(d2+64))
+
+
 
 """====OUTLOOK***********************************************************************************"""
 
 """*************************************************************************************************
-IT_OFFICE_sendemail AND sende_plain_mail utilize Outlook to send email
+OFFICE_sendemail AND sende_plain_mail utilize Outlook to send email
 attachment is an opentional parameter
-20181016 Greg created modified by Wind
+20181016 greg.zhai@syniverse.com created modified by wind.wang@syniverse.com
 *************************************************************************************************"""
-def IT_OFFICE_sendemail (Tolist, Cclist, Subject,Sentence1,attachment="Null"):
+def OFFICE_sendemail (Tolist, Cclist, Subject,Sentence1,attachment="Null"):
 	#First, install pywin32 by using "python -m pip install pypiwin32" on Windows Command console
 	import os
 	import win32com.client as win32
@@ -97,7 +117,7 @@ def IT_OFFICE_sendemail (Tolist, Cclist, Subject,Sentence1,attachment="Null"):
 	mail.Display()
 	return(0)
 	
-def IT_OFFICE_send_plain_mail (Tolist, Cclist, Subject, Sentence1,attachment="Null"):
+def OFFICE_send_plain_mail (Tolist, Cclist, Subject, Sentence1,attachment="Null"):
 	#First, install pywin32 by using "python -m pip install pypiwin32" on Windows Command console
 	import win32com.client as win32
 	outlook = win32.Dispatch('outlook.application') 
@@ -131,6 +151,6 @@ email_body=email_body.replace('REALM_A',"epc111")
 email_body=email_body.replace('REALM_B',"epc222")
 
 
-#IT_OFFICE_sendemail ('greg.zhai@syniverse.com;','ts-dss@syniverse.com', 'Test Email',email_body,'\IT_OFFICE.py')
-#IT_OFFICE_send_plain_mail ('greg.zhai@syniverse.com;jason.qin@syniverse.com;joe.feng@syniverse.com','wind.wang@syniverse.com;ts-dss@syniverse.com', 'Test Email','This Email is sent using Python script')
+#OFFICE_sendemail ('greg.zhai@syniverse.com;','ts-dss@syniverse.com', 'Test Email',email_body,'\IT_OFFICE.py')
+#OFFICE_send_plain_mail ('greg.zhai@syniverse.com;jason.qin@syniverse.com;joe.feng@syniverse.com','wind.wang@syniverse.com;ts-dss@syniverse.com', 'Test Email','This Email is sent using Python script')
 

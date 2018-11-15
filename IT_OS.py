@@ -86,7 +86,7 @@ def IT_OS_get_user_passwd_with_dialog(credential_dir_filename=""):
 			sys.exit()
 
 		root = tkinter.Tk()
-		root.title("Enter your gid/pass to update file")
+		root.title("Enter your gid/password")
 		root.geometry('330x170+500+200')
 	
 		labelName = tkinter.Label(root,text='Your Gid:',justify=tkinter.RIGHT,width=100)
@@ -103,7 +103,7 @@ def IT_OS_get_user_passwd_with_dialog(credential_dir_filename=""):
 		entryPwd = tkinter.Entry(root,show='*',width=80,textvariable=varPwd)
 		entryPwd.place(x=170, y=55, width=100, height=20)
 	
-		buttonOk = tkinter.Button(root,text='Update File',command=login)
+		buttonOk = tkinter.Button(root,text='Confirm',command=login)
 		buttonOk.place(x=80, y=100, width=80, height=20)
 	
 		buttonCancel = tkinter.Button(root,text='Cancel',command=cancel)
