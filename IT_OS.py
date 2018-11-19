@@ -1,22 +1,22 @@
 """*************************************************************************************************
 ====FILE
-	IT_OS_get_file_path_name(initial_dir="\\")
-	IT_OS_get_user_passwd_with_dialog(credential_dir_filename="")
+	OS_get_file_path_name(initial_dir="\\")
+	OS_get_user_passwd_with_dialog(credential_dir_filename="")
 
 
 ====DATE TIME
-	IT_OS_get_8_digit_GMT_date(delta_day)
+	OS_get_8_digit_GMT_date(delta_day)
 
 
 ====COMMUNICATION PROTOCOL
-	IT_OS_SSH(host,port,user,pwd,command)
-	IT_OS_sftp_download(host,port,username,password,local,remote)
-	IT_OS_sftp_upload(host,port,username,password,local,remote)
+	OS_SSH(host,port,user,pwd,command)
+	OS_sftp_download(host,port,username,password,local,remote)
+	OS_sftp_upload(host,port,username,password,local,remote)
 	
 	
 ====SHARE POINT
-	IT_OS_test_credential_by_sharepoint(user,pwd,test_url='http://central.syniverse.com/Pages/home.aspx')
-	IT_OS_fileupdate_from_sharepoint(user,pwd,url,output_file_name_path)
+	OS_test_credential_by_sharepoint(user,pwd,test_url='http://central.syniverse.com/Pages/home.aspx')
+	OS_fileupdate_from_sharepoint(user,pwd,url,output_file_name_path)
 
 
 
@@ -27,14 +27,14 @@ Wind 20181030
 """====FILE**************************************************************************************"""
 
 """*************************************************************************************************
-get_file_path_name enable windows user to locate and select a file in dialog window and return the
+OS_get_file_path_name enable windows user to locate and select a file in dialog window and return the
 full_name (path&file name)file path and file name as a list
 initial_dir specified where the system start to browse, it can be eigher absolute director like
 "C:\\DATA" or relative directory like "\\DATA"
 
 Wind 20180924
 *************************************************************************************************"""
-def IT_OS_get_file_path_name(initial_dir="\\"):
+def OS_get_file_path_name(initial_dir="\\"):
 	import time,os.path, os,shutil,tkinter.filedialog
 	if initial_dir[0].isalpha()==False:#Not start like c:
 		initial_dir=os.getcwd()+initial_dir
@@ -47,11 +47,11 @@ def IT_OS_get_file_path_name(initial_dir="\\"):
 	file_name=os.path.split(full_name)[1]
 	return([full_name,file_path,file_name])
 
-#print (IT_OS_get_file_path_name("\\file\\msu_report"))
-#print (IT_OS_get_file_path_name("C:\\file\\msu_report"))
+#print (OS_get_file_path_name("\\file\\msu_report"))
+#print (OS_get_file_path_name("C:\\file\\msu_report"))
 
 """*************************************************************************************************
-IT_OS_get_user_passwd_with_dialog(credential_dir_filename="")
+OS_get_user_passwd_with_dialog(credential_dir_filename="")
 if credential_dir_filename ="" ,it will open dialog and obtain user, pwd if they are not empty
 if credential_dir_filename !="":
 if credential_dir_filename is valid format, it will return user and pwd read from file
@@ -63,7 +63,7 @@ outputformat:[user,pwd]
 
 20181017 Wind
 *************************************************************************************************"""
-def IT_OS_get_user_passwd_with_dialog(credential_dir_filename=""):
+def OS_get_user_passwd_with_dialog(credential_dir_filename=""):
 	import os,os.path,tkinter,sys
 	import tkinter.messagebox
 	global user,pwd
@@ -151,21 +151,21 @@ def IT_OS_get_user_passwd_with_dialog(credential_dir_filename=""):
 				output.close()
 				return([user,pwd])
 	
-#print (IT_OS_get_user_passwd_with_dialog('C:\\python_work\\userinfo.txt'))
-#print (IT_OS_get_user_passwd_with_dialog())
-#print (IT_OS_get_user_passwd_with_dialog("\\c.txt"))			
+#print (OS_get_user_passwd_with_dialog('C:\\python_work\\userinfo.txt'))
+#print (OS_get_user_passwd_with_dialog())
+#print (OS_get_user_passwd_with_dialog("\\c.txt"))			
 
 """====DATE TIME*********************************************************************************"""
 
 """*************************************************************************************************
-IT_OS_get_8_digit_GMT_date returns date in 8 digital format like 20181010
+OS_get_8_digit_GMT_date returns date in 8 digital format like 20181010
 if need local time, replace gmtime with localtime in code
 to get today, delta_day=0
 to get yesterday, delta_day=-1
 
 Wind 20181010
 *************************************************************************************************"""
-def IT_OS_get_8_digit_GMT_date(delta_day):
+def OS_get_8_digit_GMT_date(delta_day):
 	import time
 
 	year=str(time.gmtime(time.time()+24*60*60*delta_day).tm_year)
@@ -178,12 +178,12 @@ def IT_OS_get_8_digit_GMT_date(delta_day):
 	timestamp=year+month+day
 	return(timestamp)
 	
-#print(IT_OS_get_8_digit_GMT_date(-1))
+#print(OS_get_8_digit_GMT_date(-1))
 
 
 '''***************COMMUNICATION PROTOCOL****************************************************************'''
 
-def IT_OS_SSH(host,port,user,pwd,command):
+def OS_SSH(host,port,user,pwd,command):
 	import paramiko
 	ssh = paramiko.SSHClient()
 	ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -194,11 +194,11 @@ def IT_OS_SSH(host,port,user,pwd,command):
 	dirresult=result.decode().rstrip().lstrip()
 	return(dirresult)
 	
-#print(IT_OS_SSH('10.162.28.187',22,'g707414','%password','netstat -an'))
+#print(OS_SSH('10.162.28.187',22,'g707414','%password','netstat -an'))
 
 
 """*******************************************************************************************************
-IT_OS_sftp_download(host,port,username,password,local,remote)
+OS_sftp_download(host,port,username,password,local,remote)
 #host='10.162.28.182'
 #port = 22 
 #username='g707414'
@@ -213,7 +213,7 @@ IT_OS_sftp_download(host,port,username,password,local,remote)
 Version: v1.0 2018.10.12
 
 *******************************************************************************************************"""
-def IT_OS_sftp_download(host,port,username,password,local,remote):
+def OS_sftp_download(host,port,username,password,local,remote):
 	import paramiko,os,platform,stat
 
 	sf = paramiko.Transport((host,port))
@@ -234,13 +234,13 @@ def IT_OS_sftp_download(host,port,username,password,local,remote):
 	
 
 """*******************************************************************************************************
-IT_OS_sftp_upload(host,port,username,password,local,remote)
+OS_sftp_upload(host,port,username,password,local,remote)
 not tested yet
 20181012
 *******************************************************************************************************"""
 
 
-def IT_OS_sftp_upload(host,port,username,password,local,remote):
+def OS_sftp_upload(host,port,username,password,local,remote):
 	import paramiko
 	import os
 	import platform
@@ -264,7 +264,7 @@ def IT_OS_sftp_upload(host,port,username,password,local,remote):
 
 
 """*************************************************************************************************
-IT_OS_test_credential_by_sharepoint verify username and password by trying to open the test_url 
+OS_test_credential_by_sharepoint verify username and password by trying to open the test_url 
 on sharepoint by HttpNtlAuth.
 If user and pwd are correct, it will return True.
 If user and pwd are not correct, it will return False.
@@ -277,8 +277,7 @@ This function is developed by Greg and updated by Wind
 *************************************************************************************************"""
 
 
-def IT_OS_test_credential_by_sharepoint(user,pwd,test_url='http://central.syniverse.com/Pages/home.aspx'):
-#def IT_OS_test_credential_by_sharepoint(user,pwd,test_url='http://central.syniverse.com/sites/TECH/io/ipxop/ts/SitePages/\Home.aspx?RootFolder=%2Fsites%2FTECH%2Fio%2Fipxop%2Fts%2FShared%20Documents%2FDSS&FolderCTID=0x01200020732C84BD8D4E4DAD0B19CE7DD0F3AD&View={DDDFFD5D-4EF8-4A45-8F9B-14E88271D54B}'):
+def OS_test_credential_by_sharepoint(user,pwd,test_url='http://central.syniverse.com/Pages/home.aspx'):
 
 	import tkinter,tkinter.messagebox,os,os.path,requests,sys,datetime,time
 	from requests_ntlm import HttpNtlmAuth
@@ -317,11 +316,11 @@ def IT_OS_test_credential_by_sharepoint(user,pwd,test_url='http://central.synive
 	if res1==200:
 		return(True)
 	return(resl)
-#print(IT_OS_test_credential_by_sharepoint('g707414','XXXXXXX'))
+#print(OS_test_credential_by_sharepoint('g707414','XXXXXXX'))
 
 
 """*************************************************************************************************
-IT_OS_fileupdate_from_sharepoint download file from sharepoint url if local file does not exist
+OS_fileupdate_from_sharepoint download file from sharepoint url if local file does not exist
 or local file is older than file on sharepoint.
 
 If user,pwd,url or the directory of output_file_name_path, this function will quit with prompt
@@ -331,7 +330,7 @@ This function is developed by Greg and updated by Wind
 20181030 Greg/Wind
 *************************************************************************************************"""
 
-def IT_OS_fileupdate_from_sharepoint(user,pwd,url,output_file_name_path):
+def OS_fileupdate_from_sharepoint(user,pwd,url,output_file_name_path):
 	import tkinter,tkinter.messagebox,os,os.path,requests,sys,datetime,time
 	from requests_ntlm import HttpNtlmAuth
 	GMT_FORMAT = '%a, %d %b %Y %H:%M:%S GMT'
@@ -419,4 +418,4 @@ def IT_OS_fileupdate_from_sharepoint(user,pwd,url,output_file_name_path):
 		root1.withdraw()
 		tkinter.messagebox.showinfo('Information', output_file+" is updated successful.")
 
-#IT_OS_fileupdate_from_sharepoint ('g707414','XXXXXX','http://central.syniverse.com/sites/TECH/io/ipxop/ts/Shared%20Documents/DSS/Tools/file/PeeringPolicy.csv','\\PeeringPolicy.csv')
+#OS_fileupdate_from_sharepoint ('g707414','XXXXXX','http://central.syniverse.com/sites/TECH/io/ipxop/ts/Shared%20Documents/DSS/Tools/file/PeeringPolicy.csv','\\PeeringPolicy.csv')
