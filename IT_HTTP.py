@@ -87,7 +87,7 @@ def printdict(mydict,k):
 			print ("%s%s:%s" %(k,item, mydict[item]))
 
 def DEMO():
-	pwd="#Bisctac8"
+	pwd="XXXXXX"
 	HTTP_login("g707414",pwd,'https://reportr.syniverse.com/j_spring_security_check')
 	gid="g707414"
 	startMonth = "01-2018"
