@@ -190,7 +190,7 @@ def dscxml_to_test_peer(dsc_config_xml_name):
 
 """====XML***************************************************************************************"""
 """*************************************************************************************************
-IT_XMLDBCSV_XML2CSV_findall use tree.findall to find content in XML and put it into CSV
+XMLDBCSV_XML2CSV_findall use tree.findall to find content in XML and put it into CSV
 into csv file
 <listCaches>
 <listCache>mmec01.mmegi8000.mme.epc.mnc000.mcc454.3gppnetwork.org</listCache>
@@ -202,7 +202,7 @@ into csv file
 Wind 20181014
 *************************************************************************************************"""
 
-def IT_XMLDBCSV_XML2CSV_findall(XML_filename,CSV_filename):
+def XMLDBCSV_XML2CSV_findall(XML_filename,CSV_filename):
 	from xml.etree import ElementTree as ET
 	import csv
 
@@ -222,11 +222,11 @@ def IT_XMLDBCSV_XML2CSV_findall(XML_filename,CSV_filename):
 			spamwriter.writerow(string)
 
 """*************************************************************************************************
-IT_XMLDBCSV_SOAP2XML get soap feedback and put it into xml file
+XMLDBCSV_SOAP2XML get soap feedback and put it into xml file
 
 Wind 20181014
 *************************************************************************************************"""
-def IT_XMLDBCSV_SOAP2XML(SURL,SENV,filename):
+def XMLDBCSV_SOAP2XML(SURL,SENV,filename):
 	import requests
 	headers = {'Host': ''}
 	headers = {'content-type': 'text/xml'}
@@ -238,7 +238,7 @@ def IT_XMLDBCSV_SOAP2XML(SURL,SENV,filename):
 	
 SOAP_QueryAllListCaches = """<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.soap.dsc.syniverse.com/"><soapenv:Header/><soapenv:Body><ws:dscAllListCachesClient/></soapenv:Body></soapenv:Envelope>"""
 url="http://10.162.28.186:8080/DSC_SOAP/query?"
-#print(SOAP2XML(url,SOAP_QueryAllListCaches,"SOAP2XML_OUTPUT.xml"))
+#print(XMLDBCSV_SOAP2XML(url,SOAP_QueryAllListCaches,"SOAP2XML_OUTPUT.xml"))
 
 """*************************************************************************************************
 IT_XMLDBCSV_DB2CSV read mysql DB into a list of dictionary and put content into csv file
@@ -246,7 +246,7 @@ IT_XMLDBCSV_DB2CSV read mysql DB into a list of dictionary and put content into 
 Wind 20181014
 *************************************************************************************************"""
 
-def IT_XMLDBCSV_DB2CSV(host,port,user,pwd,db,sql,outputfile):
+def XMLDBCSV_DB2CSV(host,port,user,pwd,db,sql,outputfile):
 	import pymysql.cursors,traceback
 	namelist=[] 
 	#连接配置信息
@@ -293,28 +293,28 @@ def IT_XMLDBCSV_DB2CSV(host,port,user,pwd,db,sql,outputfile):
 			spamwriter.writerow(string)
 	return(results)
 
-#print(DB2CSV('da3p-gen-opx-ctd001.syniverse.com',3306,'dssossreadonly','DsOs_4eaD','dss_oss',"""SELECT id, ssid, hub, hubpolicy, hubstatus FROM hubinfo;""",'.\\DB2CSV_output.csv'))
+#print(XMLDBCSV_DB2CSV('da3p-gen-opx-ctd001.syniverse.com',3306,'dssossreadonly','DsOs_4eaD','dss_oss',"""SELECT id, ssid, hub, hubpolicy, hubstatus FROM hubinfo;""",'.\\DB2CSV_output.csv'))
 
 """====CSV***************************************************************************************"""
 
 
 """*************************************************************************************************
-csv_with_header_2_dict transfer CSV file with hearder line into dictionary list
+XMLDBCSV_csv_with_header_2_ordered_dict transfer CSV file with hearder line into dictionary list
 
 Wind 20181014
 *************************************************************************************************"""
 #transfer CSV file with hearder into dictionary list
-def IT_XMLDBCSV_csv_with_header_2_ordered_dict(csv_file):
+def XMLDBCSV_csv_with_header_2_ordered_dict(csv_file):
 	import csv
 	new_dict = {}
 	with open(csv_file, 'r') as f:
 		reader = csv.reader(f, delimiter=',')
-		fieldnames = next(reader)
+		fieldnames = next(reader)#read the first row 
 		reader = csv.DictReader(f, fieldnames=fieldnames, delimiter=',')
 		new_dict = [row for row in reader]
 	return new_dict
 
-print(csv_with_header_2_ordered_dict('DB2CSV_output.csv'))
+#print(XMLDBCSV_csv_with_header_2_ordered_dict('DB.csv'))
 
 """*************************************************************************************************
 csv_with_no_header_2_list transfer CSV file with no hearder line into list

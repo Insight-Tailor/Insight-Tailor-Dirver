@@ -1,4 +1,4 @@
-c:/Python/python "IT_HTTP.py"
+c:/Python/python "ttt.py"
 
 pause
 del "%0"

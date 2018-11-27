@@ -1,0 +1,3 @@
+ssid,customerid,name,country,realm_name,imsi_prefix,status,dra,connection,coveragestatus,productcomment,commercialstatus,owner,region,tagid,technicalcomment,hub,hub_policy,LIST,LISTREGION
+7471,1750,Afghan Wireless Communication Company ,Afghanistan,epc.mnc001.mcc412.3gppnetwork.org,41201,hidden,,Indirect,Live,,,,EMEA,AFGAW,,:Comfone,Comfone:Prefered(Default),LIST_7471_AFGHAN_WIRELESS_COMMUNICATION_COMPANY,"EU,NA"
+12579,1751,Etisalat Afghanistan,Afghanistan,epc.mnc050.mcc412.3gppnetwork.org,41250,hidden,,Indirect,,,,,EMEA,AFGEA,,:ETISALAT UAE DSS Peer,ETISALAT UAE DSS Peer:Need approval,LIST_12579_ETISALAT_AFGHANISTAN,EU

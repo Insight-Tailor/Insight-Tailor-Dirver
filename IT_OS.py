@@ -199,18 +199,22 @@ def OS_SSH(host,port,user,pwd,command):
 
 """*******************************************************************************************************
 OS_sftp_download(host,port,username,password,local,remote)
+OS_sftp_upload(host,port,username,password,local,remote)
 #host='10.162.28.182'
 #port = 22 
 #username='g707414'
 #password='XXXXXX'
-#local = 'C:\\sftptest\\test'#本地文件或目录，与远程一致，当前为windows目录格式，window目录中间需要使用双斜线
-#remote = '/home/g707414/'#远程文件或目录，与本地一致，当前为linux目录格式,取远程目录下所有文件
-#remote = '/home/g707414/diameter-dsc.xml'#远程文件或目录，与本地一致，当前为linux目录格式
+if local is a directory, then remote must be a directory, in this case ,will download all file from remote
+directory to local directory
+if local is a file, then remote must be a file,in this case, the remote file will be downloaded to local 
+file
+#local = 'C:\\sftptest\\'#local direcotry，if local OS is windows"\\" is used
+#local = 'C:\\sftptest\\test.xml'#local file，if local OS is windows"\\" is used
+#remote = '/home/g707414/'#remove direcotry, use "/" for linux
+#remote = '/home/g707414/diameter-dsc.xml'#remote file, use "/" for linux
 
-#sftp_upload(host,port,username,password,local,remote)#上传
-#sftp_download(host,port,username,password,local,remote)#下载
 
-Version: v1.0 2018.10.12
+Version: v1.1 2018.11.27
 
 *******************************************************************************************************"""
 def OS_sftp_download(host,port,username,password,local,remote):
@@ -220,26 +224,17 @@ def OS_sftp_download(host,port,username,password,local,remote):
 	sf.connect(username = username,password = password)
 	sftp = paramiko.SFTPClient.from_transport(sf)
 	try:
-		if os.path.isdir(local):#判断本地参数是目录还是文件
-			print("dir is local")
-			for f in sftp.listdir(remote):#遍历远程目录
+		if os.path.isdir(local):# if variable local is a directory
+			for f in sftp.listdir(remote):#get all files in remote direcotry
 				print(f)
 				sftp.get(os.path.join(remote+f),os.path.join(local+f))#下载目录中文件
 				#sftp.get('.kshrc',os.path.join(local+f))#下载目录中文件
 		else:
-			sftp.get(remote,local)#下载文件
+			sftp.get(remote,local)#download
 	except Exception as e:
 		print('download exception:',e)
 	sf.close()
 	
-
-"""*******************************************************************************************************
-OS_sftp_upload(host,port,username,password,local,remote)
-not tested yet
-20181012
-*******************************************************************************************************"""
-
-
 def OS_sftp_upload(host,port,username,password,local,remote):
 	import paramiko
 	import os
@@ -249,15 +244,43 @@ def OS_sftp_upload(host,port,username,password,local,remote):
 	sf.connect(username = username,password = password)
 	sftp = paramiko.SFTPClient.from_transport(sf)
 	try:
-		if os.path.isdir(local):#判断本地参数是目录还是文件
-			for f in os.listdir(local):#遍历本地目录
+		if os.path.isdir(local):# if variable local is a directory
+			for f in os.listdir(local):#get all files in remote direcotry
 				sftp.put(os.path.join(local+f),os.path.join(remote+f))#上传目录中的文件
 		else:
-			sftp.put(local,remote)#上传文件
+			sftp.put(local,remote)#upload
 	except Exception as e:
 		print('upload exception:',e)
 	sf.close()
+	
+def DEMO_download_a_file():
+	host='10.162.28.182'
+	port = 22 
+	username='g707414'
+	password='XXXCXX'
+	local = 'C:\\sftptest\\test.xml'
+	remote = '/home/g707414/diameter-dsc.xml'
+	OS_sftp_download(host,port,username,password,local,remote)
 
+def DEMO_upload_a_file():
+	host='10.162.28.182'
+	port = 22 
+	username='g707414'
+	password='#XXXXXX'
+	local = 'C:\\sftptest\\test.xml'
+	remote = '/home/g707414/diameter-dsc2.xml'
+	OS_sftp_upload(host,port,username,password,local,remote)
+
+def DEMO_download_all_file():
+	host='10.162.28.182'
+	port = 22 
+	username='g707414'
+	password='XXXXXXX'
+	local = 'C:\\sftptest\\'
+	remote = '/home/g707414/'
+	OS_sftp_download(host,port,username,password,local,remote)
+	
+#DEMO_download_all_file()
 
 '''***************SHARE POINT **************************************************************************'''
 
