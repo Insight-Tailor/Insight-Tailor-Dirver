@@ -18,7 +18,8 @@
 	OS_test_credential_by_sharepoint(user,pwd,test_url='http://central.syniverse.com/Pages/home.aspx')
 	OS_fileupdate_from_sharepoint(user,pwd,url,output_file_name_path)
 
-
+====COMPRESS
+OS_un_tgz(source_file_path_name,target_path='')
 
 Last Modified by:
 Wind 20181030
@@ -49,6 +50,25 @@ def OS_get_file_path_name(initial_dir="\\"):
 
 #print (OS_get_file_path_name("\\file\\msu_report"))
 #print (OS_get_file_path_name("C:\\file\\msu_report"))
+
+"""*************************************************************************************************
+OS_listFile return a list of file and dir names under specified directory
+file suffix can be specified, is suffix=*, it will return all file and directory name
+Wind 20181201
+*************************************************************************************************"""
+def OS_listFile(directory,suffix='*'): 
+	import os
+	file_name_list = []
+	files = os.listdir(directory)  
+	for filename in files:  
+		if os.path.splitext(filename)[1] == suffix or suffix=="*":
+			file_name_list.append(filename)	
+	return file_name_list
+	
+#print(OS_listFile('.\\','*'))
+#print(OS_listFile('c:\\','.ppt'))
+
+
 
 """*************************************************************************************************
 OS_get_user_passwd_with_dialog(credential_dir_filename="")
@@ -442,3 +462,27 @@ def OS_fileupdate_from_sharepoint(user,pwd,url,output_file_name_path):
 		tkinter.messagebox.showinfo('Information', output_file+" is updated successful.")
 
 #OS_fileupdate_from_sharepoint ('g707414','XXXXXX','http://central.syniverse.com/sites/TECH/io/ipxop/ts/Shared%20Documents/DSS/Tools/file/PeeringPolicy.csv','\\PeeringPolicy.csv')
+
+
+'''***************COMPRESS **************************************************************************'''
+
+
+
+"""*************************************************************************************************
+OS_un_tgz unzip source file to target path
+if target path='', unzip to current directory
+
+20181201 Wind.Wang@syniverse.com
+*************************************************************************************************"""
+def OS_un_tgz(source_file_path_name,target_path=''):
+	import os
+	import tarfile
+	if target_path=='':
+		target_path=os.getcwd()
+	tar = tarfile.open(source_file_path_name)
+	names = tar.getnames()
+	for name in names:
+		tar.extract(name,target_path)
+	tar.close()
+f_name='.\\dsc_msu_report_by_operator.daily.HK1P.20181128.tgz'
+#OS_un_tgz(f_name,'..\\')

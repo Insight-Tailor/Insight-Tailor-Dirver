@@ -1,4 +1,4 @@
-c:/Python/python "ttt.py"
+c:/Python/python "IT_OS.py"
 
 pause
 del "%0"
